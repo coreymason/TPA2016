@@ -1,4 +1,4 @@
-/*************************************************** 
+/***************************************************
   This is a library for the Adafruit TPA2016D2 Class D Amplifier Breakout
 
   Pick one up today in the adafruit shop!
@@ -6,13 +6,13 @@
 
   This amplifier uses I2C to communicate, 2 pins are required to interface
 
-  Check out the links above for our tutorials and wiring diagrams 
+  Check out the links above for our tutorials and wiring diagrams
 
-  Adafruit invests time and resources providing this open source code, 
-  please support Adafruit and open-source hardware by purchasing 
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
   products from Adafruit!
 
-  Written by Limor Fried/Ladyada for Adafruit Industries.  
+  Written by Limor Fried/Ladyada for Adafruit Industries.
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
@@ -48,11 +48,11 @@ void Adafruit_TPA2016::enableChannel(boolean r, boolean l) {
   uint8_t setup = read8(TPA2016_SETUP);
   if (r)
     setup |= TPA2016_SETUP_R_EN;
-  else 
+  else
     setup &= ~TPA2016_SETUP_R_EN;
   if (l)
     setup |= TPA2016_SETUP_L_EN;
-  else 
+  else
     setup &= ~TPA2016_SETUP_L_EN;
 
   write8(TPA2016_SETUP, setup);
@@ -61,7 +61,7 @@ void Adafruit_TPA2016::enableChannel(boolean r, boolean l) {
 // Set to OFF, 1:2, 1:4 or 1:8
 void Adafruit_TPA2016::setAGCCompression(uint8_t x) {
   if (x > 3) return; // only 2 bits!
-  
+
   uint8_t agc = read8(TPA2016_AGC);
   agc &= ~(0x03);  // mask off bottom 2 bits
   agc |= x;        // set the compression ratio.
@@ -114,7 +114,7 @@ void Adafruit_TPA2016::setLimitLevel(uint8_t limit) {
 
 void Adafruit_TPA2016::setAGCMaxGain(uint8_t x) {
   if (x > 12) return; // max gain max is 12 (30dB)
-  
+
   uint8_t agc = read8(TPA2016_AGC);
   agc &= ~(0xF0);  // mask off top 4 bits
   agc |= (x << 4);        // set the max gain
@@ -129,7 +129,7 @@ uint8_t Adafruit_TPA2016::read8(uint8_t address)
   uint8_t data;
 
   Wire.beginTransmission(TPA2016_I2CADDR);
-#if ARDUINO >= 100
+#if ARDUINO >= 100 || defined (SPARK)
   Wire.write(address);
 #else
   Wire.send(address);
@@ -139,7 +139,7 @@ uint8_t Adafruit_TPA2016::read8(uint8_t address)
   Wire.requestFrom(TPA2016_I2CADDR, 1);
   while(!Wire.available());
 
-#if ARDUINO >= 100
+#if ARDUINO >= 100 || defined (SPARK)
   return Wire.read();
 #else
   return Wire.receive();
@@ -150,12 +150,12 @@ uint8_t Adafruit_TPA2016::read8(uint8_t address)
 void Adafruit_TPA2016::write8(uint8_t address, uint8_t data)
 {
   Wire.beginTransmission(TPA2016_I2CADDR);
-#if ARDUINO >= 100
+#if ARDUINO >= 100 || defined (SPARK)
   Wire.write(address);
-  Wire.write(data);  
+  Wire.write(data);
 #else
   Wire.send(address);
-  Wire.send(data);  
+  Wire.send(data);
 #endif
   Wire.endTransmission();
 }

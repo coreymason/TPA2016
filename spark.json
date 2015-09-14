@@ -1,6 +1,6 @@
 {
     "name": "TPA2016",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Corey Mason <corey.mason98@gmail.com>",
     "license": "GPLv3",
     "description": "TPA2016(D2) I2C controlled AGC audio amplifier"

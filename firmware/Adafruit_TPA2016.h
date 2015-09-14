@@ -1,4 +1,4 @@
-/*************************************************** 
+/***************************************************
   This is a library for the Adafruit TPA2016D2 Class D Amplifier Breakout
 
   Pick one up today in the adafruit shop!
@@ -6,21 +6,29 @@
 
   This amplifier uses I2C to communicate, 2 pins are required to interface
 
-  Check out the links above for our tutorials and wiring diagrams 
+  Check out the links above for our tutorials and wiring diagrams
 
-  Adafruit invests time and resources providing this open source code, 
-  please support Adafruit and open-source hardware by purchasing 
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
   products from Adafruit!
 
-  Written by Limor Fried/Ladyada for Adafruit Industries.  
+  Written by Limor Fried/Ladyada for Adafruit Industries.
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
 #ifndef _ADAFRUIT_TPA2016_H
 #define _ADAFRUIT_TPA2016_H
 
-#include <Arduino.h>
-#include <Wire.h>
+#if defined (SPARK)
+  #include "application.h"
+#else
+  #if defined(ARDUINO) && ARDUINO >= 100
+    #include "Arduino.h"
+  #else
+    #include "WProgram.h"
+  #endif
+  #include <Wire.h>
+#endif
 
 #define TPA2016_SETUP 0x1
 #define TPA2016_SETUP_R_EN 0x80
